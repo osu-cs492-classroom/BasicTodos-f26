@@ -1,6 +1,10 @@
 package edu.oregonstate.cs492.basictodos
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +19,21 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        val todoListTV = findViewById<TextView>(R.id.tv_todo_list)
+        val todoEntryEt = findViewById<EditText>(R.id.et_todo_entry)
+        val submitBtn = findViewById<Button>(R.id.btn_submit_todo)
+
+        val todos = mutableListOf<String>()
+
+        submitBtn.setOnClickListener {
+            val todoText = todoEntryEt.text.toString()
+            if (!TextUtils.isEmpty(todoText)) {
+                todos.add(todoText)
+                todoListTV.text = todos.joinToString(separator = "\n\n")
+                todoEntryEt.setText("")
+            }
         }
     }
 }
